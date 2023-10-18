@@ -1,6 +1,6 @@
-# rustapi
+# rust-api
 
-[![Tests](https://github.com/ndelvalle/rustapi/actions/workflows/test.yml/badge.svg?branch=master)](https://github.com/ndelvalle/rustapi/actions/workflows/test.yml)
+[![Tests](https://github.com/hope-inc/rust-api/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/hope-inc/rust-api/actions/workflows/test.yml)
 
 RESTful API template built with Rust lang. It uses [MongoDB](https://docs.mongodb.com/)
 database and [Axum](https://github.com/tokio-rs/axum) HTTP framework.
@@ -9,10 +9,6 @@ database and [Axum](https://github.com/tokio-rs/axum) HTTP framework.
 
 - [Rust](https://www.rust-lang.org/tools/install)
 - [MongoDB](https://docs.mongodb.com/manual/installation/)
-
-### How to use this template
-
-To use this template as your project starting point, click "Use this template" at the top of this page, or click [here](https://github.com/ndelvalle/rustapi/generate).
 
 ### Feature highlights
 
@@ -67,9 +63,4 @@ To use this template as your project starting point, click "Use this template" a
 To run tests make sure MongoDB is up and running.
 ```
 make test
-``` 
-
-## Contributing
-
-Contributors are welcome, please fork and send pull requests! If you find a bug
-or have any ideas on how to improve this project please submit an issue.
+```
