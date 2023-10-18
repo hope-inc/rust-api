@@ -1,0 +1,39 @@
+[tasks.format]
+category = "custom"
+command = "cargo"
+args = ["fmt", "--all", "--", "--check"]
+
+[tasks.check]
+category = "custom"
+command = "cargo"
+args = ["check"]
+
+[tasks.clippy]
+category = "custom"
+command = "cargo"
+args = ["clippy", "--", "-D", "warnings"]
+
+[tasks.clean]
+category = "custom"
+command = "cargo"
+args = ["clean"]
+
+[tasks.build]
+category = "custom"
+command = "cargo"
+args = ["build"]
+dependencies = ["clean"]
+
+[tasks.test]
+category = "custom"
+command = "cargo"
+args = ["test", "--", "--test-threads=1"]
+dependencies = ["clean"]
+
+[tasks.lint-and-test]
+category = "custom"
+dependencies = [
+    "format",
+    "build",
+    "test"
+]
