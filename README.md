@@ -60,5 +60,5 @@ database and [Axum](https://github.com/tokio-rs/axum) HTTP framework.
 ### Test
 To run tests make sure MongoDB is up and running.
 ```
-make test
+$ cargo make test
 ```
