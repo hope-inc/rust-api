@@ -1,0 +1,31 @@
+services:
+  mongodb:
+    image: mongo:6.0
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 5s
+      retries: 3
+    volumes:
+      - mongodb:/data/db
+
+  server:
+    image: "rust:latest"
+    command: "cargo run watch -x 'run'"
+    working_dir: /app
+    ports:
+      - "21080:21080"
+    environment:
+      CARGO_HOME: "/.cargo"
+    volumes:
+      - "./r:/app"
+      - "cargo_home:/.cargo"
+    depends_on:
+      - mongodb
+
+volumes:
+  mongodb:
+    driver: local
+  cargo_home:
+    driver: local

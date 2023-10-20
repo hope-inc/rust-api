@@ -1,4 +1,4 @@
-use config::{Config, ConfigError, Environment, File};
+use config::{Config, ConfigError, Environment};
 use lazy_static::lazy_static;
 use serde::Deserialize;
 use std::{env, fmt};
@@ -39,13 +39,12 @@ pub struct Settings {
 
 impl Settings {
   pub fn new() -> Result<Self, ConfigError> {
-    let run_mode = env::var("RUN_MODE").unwrap_or_else(|_| "development".into());
-
-    let mut builder = Config::builder()
-      .add_source(File::with_name("config/default"))
-      .add_source(File::with_name(&format!("config/{run_mode}")).required(false))
-      .add_source(File::with_name("config/local").required(false))
-      .add_source(Environment::default().separator("__"));
+    let mut builder = Config::builder().add_source(
+      Environment::with_prefix("APP")
+        .prefix_separator("_")
+        .separator("__")
+        .list_separator(","),
+    );
 
     // Some cloud services like Heroku exposes a randomly assigned port in
     // the PORT env var and there is no way to change the env var name.
@@ -60,8 +59,36 @@ impl Settings {
   }
 }
 
+impl fmt::Display for Settings {
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    write!(
+      f,
+      "environment: {}, server: {}, logger: {}, database: {}, auth: {} ",
+      &self.environment, self.server, self.logger, self.database, self.auth,
+    )
+  }
+}
+
 impl fmt::Display for Server {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     write!(f, "http://localhost:{}", &self.port)
+  }
+}
+
+impl fmt::Display for Logger {
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    write!(f, "level: {}", &self.level)
+  }
+}
+
+impl fmt::Display for Database {
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    write!(f, "uri: {}, name: {}", &self.uri, &self.name)
+  }
+}
+
+impl fmt::Display for Auth {
+  fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    write!(f, "secret: {}", &self.secret)
   }
 }
